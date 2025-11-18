@@ -1,18 +1,19 @@
 import { test, expect } from '@playwright/test';
+import { LoginPage } from '../pages/login.page';
+import data from '../data/data.json';
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+test.describe('User login to Trello', () => {
+  let loginPage: LoginPage;
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
-});
+  test.beforeEach(async ({ page }) => {
+    const url = data.url.login;
+    await page.goto(url);
+    loginPage = new LoginPage(page);
+  });
+  test('should log in with valid credentials', async ({ page }) => {
+    const usernamme = data.credentials.username;
+    const password = data.credentials.password;
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
-
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
-
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
+    await loginPage.login(usernamme, password);
+  });
 });
