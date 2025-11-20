@@ -22,4 +22,11 @@ test.describe('User edits workspace details', () => {
     const newDescription = data.workspace.description;
     await pulpitPage.editWorkspace(newTitle, newDescription);
   });
+  test('should create new board, new card and new task', async ({ page }) => {
+    const newBoardName = data.testBoard.name;
+    const newListName = data.list.name;
+    const newTaskName = data.card.name;
+
+    await pulpitPage.createNewBoard(page, newBoardName);
+  });
 });

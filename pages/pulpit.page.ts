@@ -6,6 +6,12 @@ export class PulpitPage {
   boardTitle: Locator;
   descriptionField: Locator;
   saveButton: Locator;
+  createBoardButton: Locator;
+  createBoardOption: Locator;
+  createBoardSubmitButton: Locator;
+  createBoardNameField: Locator;
+
+
   constructor(private page: Page) {
     this.workspaceButton = this.page.getByRole('link', { name: 'M Mariusz Januszek Board' });
     this.settingsButton = this.page.getByTestId('home-team-settings-tab');
@@ -13,6 +19,17 @@ export class PulpitPage {
     this.boardTitle = this.page.getByTestId('workspace-display-name');
     this.descriptionField = this.page.getByRole('textbox', { name: 'Description (optional)' });
     this.saveButton = this.page.getByRole('button', { name: 'Save' });
+
+    this.createBoardButton = this.page.getByTestId('header-create-menu-button');
+    this.createBoardOption = this.page.getByTestId('header-create-board-button');
+    this.createBoardNameField = this.page.getByTestId('create-board-title-input');
+    this.createBoardSubmitButton = this.page.getByTestId('create-board-submit-button');
+
+
+
+    this.page.getByTestId('list-add-card-button')
+    this.page.getByTestId('list-card-composer-textarea');
+    this.page.getByTestId('list-card-composer-add-card-button');
   }
   async editWorkspace(title: string, description: string): Promise<void> {
     await this.workspaceButton.click();
@@ -24,23 +41,10 @@ export class PulpitPage {
     await this.descriptionField.fill(description);
     await this.saveButton.click();
   }
+  async createNewBoard(page: Page, boardName: string): Promise<void> {
+    await this.createBoardButton.click();
+    await this.createBoardOption.click();
+    await this.createBoardNameField.fill(boardName);
+    await this.createBoardSubmitButton.click();
+  }
 }
-
-//   await page.goto('https://trello.com/');
-//   await page.getByTestId('header-create-menu-button').click();
-//   await page.getByTestId('header-create-board-button').click();
-//   await page.getByTestId('create-board-title-input').fill('xd');
-//   await page.getByTestId('create-board-submit-button').click();
-//   await page.getByTestId('list-name-textarea').fill('New List');
-//   await page.getByTestId('list-composer-add-list-button').click();
-//   await page.getByTestId('list-add-card-button').click();
-//   await page.getByTestId('list-card-composer-textarea').fill('New Card');
-//   await page.getByTestId('list-card-composer-add-card-button').click();
-
-//   await page.getByTestId('home-team-settings-tab').click();
-//   await page.getByRole('heading', { name: 'Mariusz Januszek Board' }).getByRole('button').click();
-//   await page.getByTestId('workspace-display-name').click();
-//   await page.getByTestId('workspace-display-name').fill('Mariusz Januszek Board');
-//   await page.getByTestId('workspace-display-name').click();
-//   await page.getByRole('textbox', { name: 'Opis (opcjonalnie)' }).fill('New Description!New Description!!!!!');
-//   await page.getByRole('button', { name: 'Zapisz' }).click();
